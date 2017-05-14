@@ -3,7 +3,7 @@ TODO List
 2. discount rule match sequence diagram    ***OK***
 3. auto generate checkout activity diagram   ***OK***
 4. Log in sequence diagram   ***OK***
-5. Discout rule management sequence diagram   ***OK*** 
+5. Discout rule management sequence diagram   ***OK***
 
 
 ## Discout Rules:
@@ -21,4 +21,3 @@ TODO List
 5. 满X元打Y折；
 6. 满X元加Y元送Z件商品；
 7. 满X元送Y元优惠券；是否累加；赠送或当场抵现；
-8.
