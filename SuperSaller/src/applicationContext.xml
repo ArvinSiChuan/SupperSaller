@@ -1,13 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans
-xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 	http://www.springframework.org/schema/aop 
-	http://www.springframework.org/schema/aop/spring-aop-4.3.xsd ">
+	http://www.springframework.org/schema/aop/spring-aop-4.3.xsd 
+	http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<context:component-scan base-package="com.supperSaller"></context:component-scan>
 
 
+	<bean name="good0"
+		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="10138758607"></property>
+		<property name="goodName" value="52度泸州老窖醉美泸州酒"></property>
+		<property name="goodSpecifications" value="50ml"></property>
+		<property name="goodPrice" value="58.00"></property>
+		<property name="goodType" value="白酒"></property>
+		<property name="goodBrand" value="泸州老窖系列酒"></property>
+		<property name="goodProducer" value="泸州老窖股份有限公司"></property>
+	</bean>
 
+	<bean name="good1"
+		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="2119008"></property>
+		<property name="goodName" value="味全活性乳酸菌饮品（芦荟味）"></property>
+		<property name="goodSpecifications" value="330ml"></property>
+		<property name="goodPrice" value="6.50"></property>
+		<property name="goodType" value="饮料"></property>
+		<property name="goodBrand" value="味全"></property>
+		<property name="goodProducer" value="杭州味全食品有限公司"></property>
+	</bean>
+
+	<bean name="good2"
+		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="2119029"></property>
+		<property name="goodName" value="味全每日C橙汁300ml"></property>
+		<property name="goodSpecifications" value="300ml"></property>
+		<property name="goodPrice" value="6.40"></property>
+		<property name="goodType" value="饮料"></property>
+		<property name="goodBrand" value="味全"></property>
+		<property name="goodProducer" value="杭州味全食品有限公司"></property>
+	</bean>
+
+	<bean name="good3"
+		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="4071814"></property>
+		<property name="goodName" value="小米圈铁耳机Pro"></property>
+		<property name="goodSpecifications" value="14g"></property>
+		<property name="goodPrice" value="149.00"></property>
+		<property name="goodType" value="电子产品"></property>
+		<property name="goodBrand" value="小米"></property>
+		<property name="goodProducer" value="小米科技有限责任公司"></property>
+	</bean>
+
+	<bean name="good4"
+		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="1922755"></property>
+		<property name="goodName" value="卫龙大面筋"></property>
+		<property name="goodSpecifications" value="106g"></property>
+		<property name="goodPrice" value="2.90"></property>
+		<property name="goodType" value="食品"></property>
+		<property name="goodBrand" value="卫龙"></property>
+		<property name="goodProducer" value="漯河市平平责任有限公司"></property>
+	</bean>
+
+	<bean name="good5"
+		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="1241849"></property>
+		<property name="goodName" value="维达卷纸"></property>
+		<property name="goodSpecifications" value="140g*27pcs"></property>
+		<property name="goodPrice" value="52.90"></property>
+		<property name="goodType" value="日用品"></property>
+		<property name="goodBrand" value="维达"></property>
+		<property name="goodProducer" value="维达集团"></property>
+	</bean>
+
+	<bean name="good6"
+		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="1304821"></property>
+		<property name="goodName" value="福临门金典长粒香"></property>
+		<property name="goodSpecifications" value="4kg"></property>
+		<property name="goodPrice" value="33.90"></property>
+		<property name="goodType" value="粮油"></property>
+		<property name="goodBrand" value="福临门"></property>
+		<property name="goodProducer" value="中粮食品营销有限公司"></property>
+	</bean>
+
+	<bean name="good7"
+		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="10138758607"></property>
+		<property name="goodName" value="52度泸州老窖醉美泸州酒"></property>
+		<property name="goodSpecifications" value="50ml"></property>
+		<property name="goodPrice" value="58.00"></property>
+		<property name="goodType" value="白酒"></property>
+		<property name="goodBrand" value="泸州老窖系列酒"></property>
+		<property name="goodProducer" value="泸州老窖股份有限公司"></property>
+	</bean>
+	
+	<bean name="good8"
+		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="10138758607"></property>
+		<property name="goodName" value="52度泸州老窖醉美泸州酒"></property>
+		<property name="goodSpecifications" value="50ml"></property>
+		<property name="goodPrice" value="58.00"></property>
+		<property name="goodType" value="白酒"></property>
+		<property name="goodBrand" value="泸州老窖系列酒"></property>
+		<property name="goodProducer" value="泸州老窖股份有限公司"></property>
+	</bean>
+	
+	<bean name="good9"
+		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="10138758607"></property>
+		<property name="goodName" value="52度泸州老窖醉美泸州酒"></property>
+		<property name="goodSpecifications" value="50ml"></property>
+		<property name="goodPrice" value="58.00"></property>
+		<property name="goodType" value="白酒"></property>
+		<property name="goodBrand" value="泸州老窖系列酒"></property>
+		<property name="goodProducer" value="泸州老窖股份有限公司"></property>
+	</bean>
+	
+
+	<bean id="goodsList" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="good0" />
+				<ref bean="good1" />
+				<ref bean="good2" />
+				<ref bean="good3" />
+				<ref bean="good4" />
+				<ref bean="good5" />
+				<ref bean="good6" />
+				<ref bean="good7" />
+				<ref bean="good8" />
+				<ref bean="good9" />
+			</list>
+		</constructor-arg>
+	</bean>
 </beans>

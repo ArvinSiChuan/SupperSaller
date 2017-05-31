@@ -3,9 +3,9 @@ package com.supperSaller.beans.outsideSupportSys.entities;
 import javax.persistence.Entity;
 
 /**
- * @author ����ǿ
+ * @author 邱依强
  * @version 1.0
- * @created 24-5��-2017 8:44:40
+ * @created 24-05-2017 8:44:40
  */
 @Entity
 public class Good {
@@ -28,6 +28,10 @@ public class Good {
 	 * @param goodProducer
 	 * @param goodDesc
 	 */
+	public Good() {
+
+	}
+
 	public Good(String goodID, String goodName, String goodSpecifications, double goodPrice, String goodType,
 			String goodBrand, String goodProducer, String goodDesc) {
 		super();
