@@ -20,7 +20,7 @@
 					<security:csrfInput/>
 					
 					<div class="6u 12u$(small)">
-						<input type="text" name="username" id="name" placeholder="工号/邮箱" required="required" pattern="((\w)+(\.\w+)*@(\w)+((\.\w+)+))|([0-9]*)" title="请输入工号或邮箱" />
+						<input type="text" name="username" id="name" placeholder="工号/邮箱" required="required" pattern="([A-z]*)|([0-9]*)" title="请输入工号或邮箱" />
 					</div>
 
 					<div class="6u$ 12u$(small)" >

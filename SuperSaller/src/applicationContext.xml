@@ -10,10 +10,23 @@
    http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<context:component-scan base-package="com.supperSaller"></context:component-scan>
+	
+	<bean id="oracleDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property> 
+		<property name="url" 
+			value="jdbc:oracle:thin:@localhost:1521:orcl">
+		</property>
+		<property name="username" value="C##PROMOTION"></property>
+		<property name="password" value="arvinsichuan"></property>		
+		<property name="initialSize" value="5"></property>
+		<property name="maxTotal" value="80"></property>
+	</bean>
+
+
 
 
 	<bean name="good0"
-		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		class="com.superSaller.beans.outsideSupportSys.entities.Good">
 		<property name="goodID" value="10138758607"></property>
 		<property name="goodName" value="52度泸州老窖醉美泸州酒"></property>
 		<property name="goodSpecifications" value="50ml"></property>
@@ -24,7 +37,7 @@
 	</bean>
 
 	<bean name="good1"
-		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		class="com.superSaller.beans.outsideSupportSys.entities.Good">
 		<property name="goodID" value="2119008"></property>
 		<property name="goodName" value="味全活性乳酸菌饮品（芦荟味）"></property>
 		<property name="goodSpecifications" value="330ml"></property>
@@ -35,7 +48,7 @@
 	</bean>
 
 	<bean name="good2"
-		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		class="com.superSaller.beans.outsideSupportSys.entities.Good">
 		<property name="goodID" value="2119029"></property>
 		<property name="goodName" value="味全每日C橙汁300ml"></property>
 		<property name="goodSpecifications" value="300ml"></property>
@@ -46,7 +59,7 @@
 	</bean>
 
 	<bean name="good3"
-		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		class="com.superSaller.beans.outsideSupportSys.entities.Good">
 		<property name="goodID" value="4071814"></property>
 		<property name="goodName" value="小米圈铁耳机Pro"></property>
 		<property name="goodSpecifications" value="14g"></property>
@@ -57,7 +70,7 @@
 	</bean>
 
 	<bean name="good4"
-		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		class="com.superSaller.beans.outsideSupportSys.entities.Good">
 		<property name="goodID" value="1922755"></property>
 		<property name="goodName" value="卫龙大面筋"></property>
 		<property name="goodSpecifications" value="106g"></property>
@@ -68,7 +81,7 @@
 	</bean>
 
 	<bean name="good5"
-		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		class="com.superSaller.beans.outsideSupportSys.entities.Good">
 		<property name="goodID" value="1241849"></property>
 		<property name="goodName" value="维达卷纸"></property>
 		<property name="goodSpecifications" value="140g*27pcs"></property>
@@ -79,7 +92,7 @@
 	</bean>
 
 	<bean name="good6"
-		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
+		class="com.superSaller.beans.outsideSupportSys.entities.Good">
 		<property name="goodID" value="1304821"></property>
 		<property name="goodName" value="福临门金典长粒香"></property>
 		<property name="goodSpecifications" value="4kg"></property>
@@ -90,36 +103,36 @@
 	</bean>
 
 	<bean name="good7"
-		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
-		<property name="goodID" value="10138758607"></property>
-		<property name="goodName" value="52度泸州老窖醉美泸州酒"></property>
-		<property name="goodSpecifications" value="50ml"></property>
-		<property name="goodPrice" value="58.00"></property>
-		<property name="goodType" value="白酒"></property>
-		<property name="goodBrand" value="泸州老窖系列酒"></property>
-		<property name="goodProducer" value="泸州老窖股份有限公司"></property>
+		class="com.superSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="11663227840"></property>
+		<property name="goodName" value="劲霸男装K-Boxing短袖T恤男 灰兰 均码"></property>
+		<property name="goodSpecifications" value="L"></property>
+		<property name="goodPrice" value="189.00"></property>
+		<property name="goodType" value="男装短袖T恤"></property>
+		<property name="goodBrand" value="劲霸男装"></property>
+		<property name="goodProducer" value="劲霸男装（上海）有限公司"></property>
 	</bean>
 	
 	<bean name="good8"
-		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
-		<property name="goodID" value="10138758607"></property>
-		<property name="goodName" value="52度泸州老窖醉美泸州酒"></property>
-		<property name="goodSpecifications" value="50ml"></property>
-		<property name="goodPrice" value="58.00"></property>
-		<property name="goodType" value="白酒"></property>
-		<property name="goodBrand" value="泸州老窖系列酒"></property>
-		<property name="goodProducer" value="泸州老窖股份有限公司"></property>
+		class="com.superSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="9787508672069"></property>
+		<property name="goodName" value="未来简史"></property>
+		<property name="goodSpecifications" value="16开平装"></property>
+		<property name="goodPrice" value="50.90"></property>
+		<property name="goodType" value="图书"></property>
+		<property name="goodBrand" value="中信出版（Citic Press）"></property>
+		<property name="goodProducer" value="中信出版社"></property>
 	</bean>
 	
 	<bean name="good9"
-		class="com.supperSaller.beans.outsideSupportSys.entities.Good">
-		<property name="goodID" value="10138758607"></property>
-		<property name="goodName" value="52度泸州老窖醉美泸州酒"></property>
-		<property name="goodSpecifications" value="50ml"></property>
-		<property name="goodPrice" value="58.00"></property>
-		<property name="goodType" value="白酒"></property>
-		<property name="goodBrand" value="泸州老窖系列酒"></property>
-		<property name="goodProducer" value="泸州老窖股份有限公司"></property>
+		class="com.superSaller.beans.outsideSupportSys.entities.Good">
+		<property name="goodID" value="9787508647357"></property>
+		<property name="goodName" value="人类简史"></property>
+		<property name="goodSpecifications" value="16开平装"></property>
+		<property name="goodPrice" value="50.90"></property>
+		<property name="goodType" value="图书"></property>
+		<property name="goodBrand" value="中信出版（Citic Press）"></property>
+		<property name="goodProducer" value="中信出版集团"></property>
 	</bean>
 	
 

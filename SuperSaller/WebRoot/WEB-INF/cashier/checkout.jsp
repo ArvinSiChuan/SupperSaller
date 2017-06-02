@@ -1,112 +1,133 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix='security' uri='http://www.springframework.org/security/tags' %>  
+<%@ taglib prefix='security' uri='http://www.springframework.org/security/tags' %>
 <!DOCTYPE html>
 <html lang="en">
 
 	<head>
 		<meta charset="UTF-8">
+		<security:csrfMetaTags/>
 		<title>Cashier Checkout</title>
-		<link rel="stylesheet" href="../assets/css/main.css" />
-		<script src="../assets/js/jquery.min.js"></script>
-		<script src="../assets/js/utils.js"></script>
-		<script src="../assets/js/checkout.js"></script>
+		<link rel="stylesheet" href="../css/main.css" />
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/utils.js"></script>
+		<script src="../js/checkout.js"></script>
 	</head>
 
 	<body>
-		<section id="main" class="wrapper">
-			<header class="inner" style="text-align: left;">
+		<section id="main" class="wrapper" style="width: 70%;">
+			<header class="inner" style="text-align: left;margin-left: 2.2em;">
 				<h2 style="color: #000000;">结算</h2>
+				<h1>已登录的用户：<security:authentication property="name" /></h1>
+				<form action="../auth/logout/" method="post">
+					<security:csrfInput/>
+					<input class=" alt small" type="submit" value="注销登陆" />
+					<a class="button alt small" href="../">返回主菜单</a>
+				</form>
 			</header>
-			<div id="goodListDiv" style="padding-left: 5em;padding-right: 5em;">
-				<table id="goodListTable">
-					<tr>
-						<th>商品号</th>
-						<th>商品名称</th>
-						<th>品牌</th>
-						<th>数量</th>
-						<th>单价原价</th>
-						<th>优惠后单价</th>
-						<th>优惠金额</th>
-						<th>小计</th>
-						<th>备注</th>
-						<th>操作</th>
-					</tr>
-					<tr>
-						<td>test1</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>test2</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr id="seperator">
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-					</tr>
-					<tr>
-						<td>test3</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr id="seperator">
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-						<td>————————</td>
-					</tr>
-					<tr>
-						<td><input id="newGood" type="text" pattern="[0-9]*" placeholder="商品数字号" /></td>
-						<td id="goodName"></td>
-						<td id="goodBrand"></td>
-						<td>
-							<input id="goodNumAdd" type="button" value=" + " />
-							<input id="goodNums"  type="number" min="1" value="1" style="width: 2.5em;" />
-							<input id="goodNumRemove" type="button" value=" - " />
-						</td>
-						<td id="originalPrice"></td>
-						<td id="discountedPrice"></td>
-						<td id="discountMoney"></td>
-						<td id="subTotal"></td>
-						<td id="comments"></td>
-						<td><input id="addToGoodListBtn" type="button" value="添加" /></td>
-					</tr>
+			<div id="goodListDiv" style="margin-left: 2.2em;margin-top: 1em;">
+				<table id="goodListTable" class="table-wrapper">
+					<thead>
+						<tr>
+							<th>商品号</th>
+							<th>商品名称/规格</th>
+							<th>品牌/所属品类</th>
+							<th>数量</th>
+							<th>单价原价</th>
+							<th>优惠后单价</th>
+							<th>优惠金额</th>
+							<th>小计</th>
+							<th>备注</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>test1</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>test2</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr name="seperator">
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+						</tr>
+						<tr>
+							<td>test3</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr name="seperator">
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+							<td>————————</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr id="addNewGood">
+							<td name="newGood">
+								<input name="newGood" type="text" pattern="[0-9]*" placeholder="商品数字号" />
+								<input name="history" type="hidden" />
+								<div name="possibleGoods" style="width: 100%;">
+									<a href="#newGood" class="button small fit" onclick="foucusNewGoodBox();">☝填写商品代码</a>
+								</div>
+							</td>
+							<td name="goodName"></td>
+							<td name="goodBrand"></td>
+							<td name="goodNums">
+								<input name="goodNumAdd" class="small fit" type="button" value=" + " />
+								<input name="goodNums" type="number" min="1" value="1" style="width: 100%;margin-bottom: 0.7em;" />
+								<input name="goodNumRemove" class="small fit" type="button" value=" - " />
+							</td>
+							<td name="originalPrice"></td>
+							<td name="discountedPrice"></td>
+							<td name="discountMoney"></td>
+							<td name="subTotal"></td>
+							<td name="comments"></td>
+							<td>
+								<input id="addToGoodListBtn" type="button" class="fit" value="添加" />
+							</td>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 		</section>

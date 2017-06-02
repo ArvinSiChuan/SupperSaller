@@ -1,10 +1,9 @@
-
 // CSRF Defence header producer
 function getHeaderToken() {
 	var header = $("meta[name='_csrf_header']").attr("content");
 	var token = $("meta[name='_csrf']").attr("content");
 	var headerToken = {};
-	headerToken[header]=token;
+	headerToken[header] = token;
 	return headerToken;
 }
 
@@ -19,13 +18,34 @@ function doTwinkleAnimate(target, times) {
 	}
 }
 
-function ajaxError(data){
-	switch (data.status){
+function getSum(price,quality){
+	var p=parseFloat(price);
+	var q=parseFloat(quality);
+	return p*q;
+}
+
+function ajaxError(data) {
+	switch(data.status) {
 		case 403:
-			location.href="/SpringExperiment/logout/";
+			doAjaxLogOut();
 			break;
 		default:
-			location.href="/SpringExperiment/logout/";
+			alert('Error:'+data.status);
 			break;
 	}
 }
+
+function doAjaxLogOut(){
+	var csrfHeader=getHeaderToken();
+	$.ajax({
+			url: '/SuperSaller/auth/logout/',
+			type: 'POST',
+			async: true,
+			headers: csrfHeader,
+			dataType: 'json',
+			contentType: 'application/x-www-form-urlencoded;charset:utf-8;',
+			data:{},
+		});
+}
+
+

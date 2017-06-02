@@ -14,9 +14,11 @@
 	<http auto-config="true" create-session="always" use-expressions="true"
 		disable-url-rewriting="true">
 		<form-login login-page="/auth/login/" login-processing-url="/auth/login/"
-			default-target-url="/index.jsp" always-use-default-target="true" />
-		<intercept-url pattern="/a/" access="hasRole('CASHIER')" />
-		
+			default-target-url="/" always-use-default-target="true" />
+		<intercept-url pattern="/*" access="hasRole('CASHIER')" />
+		<intercept-url pattern="/cashier/*" access="hasRole('CASHIER')" />
+		<intercept-url pattern="/admin/*" access="hasRole('ADMIN')" />
+
 		<logout logout-url="/auth/logout/" logout-success-url="/auth/login/"
 			invalidate-session="true" />
 	</http>
@@ -25,8 +27,8 @@
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
-				<user name="jimi" password="jimispassword" authorities="ROLE_CASHIER, ROLE_ADMIN" />
-				<user name="123" password="pwd123" authorities="ROLE_CASHIER" />
+				<user name="jimi" password="pwd345" authorities="ROLE_CASHIER, ROLE_ADMIN" />
+				<user name="cashier" password="pwd123" authorities="ROLE_CASHIER" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
