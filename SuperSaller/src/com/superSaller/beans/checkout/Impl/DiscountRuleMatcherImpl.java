@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.superSaller.beans.checkout.DiscountMatcher;
 import com.superSaller.beans.checkout.entities.DiscountRule;
 import com.superSaller.beans.checkout.entities.Present;
+import com.superSaller.beans.checkout.entities.ViewSideGood;
 import com.superSaller.beans.outsideSupportSys.entities.Customer;
 import com.superSaller.beans.outsideSupportSys.entities.Good;
 
@@ -30,15 +31,9 @@ public class DiscountRuleMatcherImpl implements DiscountMatcher {
 
 	}
 
-	public void finalize() throws Throwable {
-
-	}
-
-	/**
-	 * 
-	 * @param goods
-	 */
-	public ArrayList<Map<DiscountRule, Good>> doDiscountRuleMatch(Set<Good> goods) {
+	@Override
+	public ArrayList<ViewSideGood> doDiscountRuleMatch(ArrayList<ViewSideGood> goods) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

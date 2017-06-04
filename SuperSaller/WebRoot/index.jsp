@@ -36,7 +36,7 @@
 				</security:authorize>
 				<security:authorize access="hasRole('ADMIN')">
 					<div>
-						<a href="#" class="button" style="width: 200px;height: 200px;">
+						<a href="./admin/" class="button" style="width: 200px;height: 200px;">
 							<br />
 							<ruby style="font-size: x-large;">管理侧<rt>Admin Side</rt></ruby>
 						</a>

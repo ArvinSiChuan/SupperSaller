@@ -3,7 +3,7 @@ package com.superSaller.beans.security.Impl;
 import com.superSaller.beans.persons.entities.CashSideEmployee;
 import com.superSaller.beans.security.IDVerify;
 import com.superSaller.beans.security.IDVerifyStatus;
-import com.superSaller.dao.CashSideEmployeeDAOImpl;
+import com.superSaller.dao.CashSideEmployeeDAO;
 
 /**
  * @author ����ǿ
@@ -11,7 +11,7 @@ import com.superSaller.dao.CashSideEmployeeDAOImpl;
  * @created 24-5��-2017 8:44:41
  */
 public class IDVerifyImpl implements IDVerify {
-	private CashSideEmployeeDAOImpl dao;
+	private CashSideEmployeeDAO dao;
 	private CashSideEmployee employee;
 	private IDVerifyStatus status = IDVerifyStatus.inValid;
 

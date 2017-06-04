@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix='security' uri='http://www.springframework.org/security/tags' %>  
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>  
 <!DOCTYPE html>
 <html>
 
@@ -14,8 +15,14 @@
 			<header>
 				<h2>登录</h2>
 				<h3>商场促销系统</h3>
+				<c:if test="${SPRING_SECURITY_LAST_EXCEPTION.message != null}">
+					<h4 style="color:red;">${SPRING_SECURITY_LAST_EXCEPTION.message}</h4>
+				</c:if>
+
+				
+				
 			</header>
-			<div id="loginformDiv" style="margin:auto;"  style="width: 25em;">
+			<div id="loginformDiv" style="margin:auto;width: 25em;">
 				<form name="loginform" id="loginform" action="../../auth/login/" method="post">
 					<security:csrfInput/>
 					

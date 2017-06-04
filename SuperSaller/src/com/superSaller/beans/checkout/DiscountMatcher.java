@@ -1,11 +1,8 @@
 package com.superSaller.beans.checkout;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
 
-import com.superSaller.beans.checkout.entities.DiscountRule;
-import com.superSaller.beans.outsideSupportSys.entities.Good;
+import com.superSaller.beans.checkout.entities.ViewSideGood;
 
 /**
  * @author 邱依强
@@ -18,5 +15,5 @@ public interface DiscountMatcher {
 	 * 
 	 * @param goods
 	 */
-	public ArrayList<Map<DiscountRule, Good>> doDiscountRuleMatch(Set<Good> goods);
+	public ArrayList<ViewSideGood> doDiscountRuleMatch(ArrayList<ViewSideGood> goods);
 }

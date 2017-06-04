@@ -28,6 +28,7 @@ function ajaxError(data) {
 	switch(data.status) {
 		case 403:
 			doAjaxLogOut();
+			location.reload();
 			break;
 		default:
 			alert('Error:'+data.status);
@@ -44,7 +45,9 @@ function doAjaxLogOut(){
 			headers: csrfHeader,
 			dataType: 'json',
 			contentType: 'application/x-www-form-urlencoded;charset:utf-8;',
-			data:{},
+			data:{
+				logout:true
+			},
 		});
 }
 

@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +14,7 @@ import com.superSaller.beans.outsideSupportSys.entities.Good;
 
 @RestController
 @RequestMapping("/goods")
-public class GoodsController {
+public class GoodsRESTController {
 	@Resource(name = "goodsSupport")
 	private GoodIO goodsSupport;
 
@@ -28,7 +26,6 @@ public class GoodsController {
 	@RequestMapping(value = "/query", method = RequestMethod.POST)
 	public Good queryGood(String goodID) {
 		Good good = goodsSupport.getGood(goodID);
-		System.out.println(good.getGoodName());
 		return good;
 	}
 
@@ -40,12 +37,6 @@ public class GoodsController {
 			possibleID.add(good.getGoodID());
 		}
 		return possibleID;
-	}
-
-	@RequestMapping(value = "/addGood/{orderid}/{quantity}", method = RequestMethod.PUT)
-	public List<Good> addGoodToOrder(@RequestBody Good good, @PathVariable("orderid") String orderID,
-			@PathVariable("quantity") int quantity) {
-		return null;
 	}
 
 }

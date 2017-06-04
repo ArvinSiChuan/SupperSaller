@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+	http://www.springframework.org/schema/security 
+	http://www.springframework.org/schema/security/spring-security-4.2.xsd 
+	">
+	<http pattern="/js/**" security="none"/>
+	<http pattern="/login/**" security="none"/>
+
+	
+	<http auto-config="true"  create-session="always"  use-expressions="true" disable-url-rewriting="true" >
+			<form-login login-page="/login/index.html"  login-processing-url="/login/index.html" 
+			default-target-url="/student/all" always-use-default-target="false"
+			authentication-failure-url="" 
+			authentication-success-handler-ref=""
+			authentication-failure-handler-ref=""/>
+			<remember-me key="test-remember-me"/>
+			<logout invalidate-session="true"  logout-url="/logout/" success-handler-ref="logOutSuccessHandler"/>
+			<session-management invalid-session-url="/login/index.html">
+					<concurrency-control max-sessions="1"  error-if-maximum-exceeded="false" expired-url="/login/index.html"/>
+			</session-management>
+			<intercept-url pattern="/student/**" access="authenticated"/>
+	</http>
+
+	<beans:bean id="logOutSuccessHandler" class="com.springexperiment.beans.authHandlers.LogOutSuccessHandler">
+	</beans:bean>
+	<beans:bean id="customerUserDetailsService" class="com.springexperiment.beans.authHandlers.CustomerUserDetailsService">
+	</beans:bean>
+	
+	<authentication-manager>
+			<authentication-provider user-service-ref="customerUserDetailsService">
+					<password-encoder hash="md5">
+							<salt-source user-property="name"/>
+					</password-encoder>
+			</authentication-provider>
+	</authentication-manager>
+
+
+</beans:beans>

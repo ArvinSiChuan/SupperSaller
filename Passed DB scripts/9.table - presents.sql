@@ -12,40 +12,38 @@ DECLARE
 BEGIN
 SELECT COUNT(*) INTO C
 FROM USER_TABLES
-  WHERE TABLE_NAME = 'RULES_ORDERS' ;
+  WHERE TABLE_NAME = 'PRESENTS' ;
   IF (C > 0) THEN
-    EXECUTE IMMEDIATE 'DROP TABLE RULES_ORDERS CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE PRESENTS CASCADE CONSTRAINTS';
 END IF;
 END;
 
 /* Create Tables */
 
-CREATE TABLE Rules_Orders
+CREATE TABLE Presents
 (
-	Rule_UUID CHAR(32) NOT NULL,
-	Order_ID CHAR(32) NOT NULL
+	Present_UUID CHAR(32) NOT NULL,
+	Present_Type VARCHAR2(64) NOT NULL,
+	Present_Condition_Value NUMBER(8,2),
+	Present_Discount_Value NUMBER(8,2),
+	Rule_UUID CHAR(32) NOT NULL
 )
 ;
 
 /* Create Primary Keys, Indexes, Uniques, Checks, Triggers */
 
-CREATE INDEX IXFK_Rules_Orders_Discoun01
- ON Rules_Orders (Rule_UUID)
+CREATE INDEX IXFK_Rule_has_many_Presen01
+ ON Presents (Rule_UUID)
 ;
 
-ALTER TABLE Rules_Orders
- ADD CONSTRAINT PK_Rules_Orders
-	PRIMARY KEY (Rule_UUID,Order_ID) USING INDEX
+ALTER TABLE Presents
+ ADD CONSTRAINT PK_Presents
+	PRIMARY KEY (Present_UUID) USING INDEX
 ;
 
 /* Create Foreign Key Constraints */
 
-ALTER TABLE Rules_Orders
- ADD CONSTRAINT FK_Rules_Orders_Discount_Rules
+ALTER TABLE Presents
+ ADD CONSTRAINT FK_Rule_has_many_Presents
 	FOREIGN KEY (Rule_UUID) REFERENCES Discount_Rules (Rule_UUID)
-;
-
-ALTER TABLE Rules_Orders
- ADD CONSTRAINT FK_Orders_Rules_Orders
-	FOREIGN KEY (Order_ID) REFERENCES Orders (Order_ID)
 ;

@@ -9,7 +9,7 @@ import com.superSaller.beans.persons.entities.CashSideEmployee;
 import com.superSaller.beans.persons.entities.EmRole;
 
 @Service(value = "cashSideEmDAO")
-public class CashSideEmployeeDAOImpl extends BaseDAO<CashSideEmployee> {
+public class CashSideEmployeeDAO extends BaseDAO<CashSideEmployee> {
 
 	@Override
 	public CashSideEmployee mapRow(ResultSet rs, int rowNum) throws SQLException {
