@@ -23,8 +23,8 @@ END;
 CREATE TABLE Saled_Goods
 (
 	Good_ID VARCHAR2(64) NOT NULL,
-	Saled_Date DATE NOT NULL,
 	Sum NUMBER(8,2) NOT NULL,
+	SALED_DATE DATE NOT NULL,
 	Price NUMBER(9,2) NOT NULL,
 	Order_ID CHAR(32) NOT NULL
 )
@@ -38,7 +38,7 @@ CREATE INDEX IXFK_Order_has_many_Goods01
 
 ALTER TABLE Saled_Goods
  ADD CONSTRAINT PK_Saled_Goods
-	PRIMARY KEY (Good_ID,Saled_Date) USING INDEX
+	PRIMARY KEY (Good_ID,Order_ID) USING INDEX
 ;
 
 /* Create Foreign Key Constraints */

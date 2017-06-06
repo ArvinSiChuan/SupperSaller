@@ -39,9 +39,9 @@ public class OrderProcessImpl implements OrderProcess {
 	}
 
 	@Override
-	public List<ViewSideGood> removeGoodAndMatch(ViewSideGood good) {
-		// TODO Auto-generated method stub
-		return null;
+	public ViewSideGood removeGoodAndMatch(ViewSideGood good) {
+		saledGoodDAO.removeSaledGood(good.getSaledGood());
+		return good;
 	}
 
 	private List<ViewSideGood> addGood(ViewSideGood good) {
@@ -50,6 +50,12 @@ public class OrderProcessImpl implements OrderProcess {
 		}
 		saledGoodDAO.addSaledGood(good.getSaledGood());
 		return saledGoodDAO.getGoodsInsameOrder(good);
+	}
+
+	@Override
+	public List<ViewSideGood> getAddedGoodsByOrder(String orderID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

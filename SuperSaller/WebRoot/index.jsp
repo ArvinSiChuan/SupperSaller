@@ -12,7 +12,7 @@
 		<script src="./js/utils.js"></script>
 	</head>
 
-	<body>
+	<body >
 		<header style="text-align: center;">
 			<div style="margin-top: 3em;">
 				<h2>
@@ -24,8 +24,7 @@
 				</form>
 			</div>
 		</header>
-		<section id="main" class="main" style="width: 30%;margin:2.5em auto;">
-			<div class="flex flex-2" >
+			<div class="flex flex-2" style="margin: auto;text-align: center;width: 29.25%;" >
 				<security:authorize access="hasRole('CASHIER')">
 					<div>
 						<a href="./cashier/start" class="button" style="width: 200px;height: 200px;">
@@ -45,7 +44,6 @@
 
 			</div>
 			
-		</section>
 	</body>
 
 </html>

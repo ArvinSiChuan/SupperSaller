@@ -3,6 +3,7 @@ var addNewGood; // 添加货物行标记
 var addGoodNumBtn; // 添加货物数量标记
 var removeGoodNumBtn; // 减少货物数量标记
 var goodNumBox; // 修改货物的货物数量标记
+var addGoodToListBtn;
 
 var newGoodBox; // 添加货物的货物号输入框
 var possibleGoodsList; // 可选货物列表
@@ -10,8 +11,8 @@ var newGoodRowPass = false;
 
 var csrfHeader;
 
-
 $(document).ready(function() {
+	orderID = null;
 	// get usually used elements
 	addNewGood = $("#addNewGood");
 	addGoodNumBtn = addNewGood
@@ -23,10 +24,17 @@ $(document).ready(function() {
 		.children("td[name='newGood']")
 		.children("input[name='newGood']");
 	possibleGoodsList = newGoodBox.siblings("div[name='possibleGoods']");
+	addGoodToListBtn = $("#addToGoodListBtn");
+
+	addedList = $("tbody");
 
 	// read the csrf token
 	csrfHeader = getHeaderToken();
 
+	$("#logOut").click(function(){
+		doAjaxLogOut();
+	});
+	
 	// focus on inputbox
 	foucusNewGoodBox();
 
@@ -50,7 +58,7 @@ $(document).ready(function() {
 	});
 
 	// bind addToGoodListBtn
-	$("#addToGoodListBtn").click(function() {
+	addGoodToListBtn.click(function() {
 		if(newGoodRowPass) {
 			addGoodToList();
 			resetNewGoodRow();
@@ -60,12 +68,12 @@ $(document).ready(function() {
 			doTwinkleAnimate(addNewGood.children("td[name='comments']"), 3);
 		}
 	});
-	
-	$("#cancelOrderBtn").click(function (){
-		
+
+	$("#cancelOrderBtn").click(function() {
+
 	})
-	
-	$("#beginPaymentBtn").click(function (){
-		
+
+	$("#beginPaymentBtn").click(function() {
+
 	})
 });

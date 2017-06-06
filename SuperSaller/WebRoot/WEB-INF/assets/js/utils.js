@@ -18,37 +18,51 @@ function doTwinkleAnimate(target, times) {
 	}
 }
 
-function getSum(price,quality){
-	var p=parseFloat(price);
-	var q=parseFloat(quality);
-	return p*q;
+function getSum(price, quality) {
+	var p = parseFloat(price);
+	var q = parseFloat(quality);
+	return p * q;
 }
 
 function ajaxError(data) {
 	switch(data.status) {
 		case 403:
+			alert('身份认证已过期，即将进行重新认证！');
 			doAjaxLogOut();
-			location.reload();
 			break;
 		default:
-			alert('Error:'+data.status);
+			alert('Error:' + data.status);
 			break;
 	}
 }
 
-function doAjaxLogOut(){
-	var csrfHeader=getHeaderToken();
+function doAjaxLogOut() {
+	var csrfHeader = getHeaderToken();
 	$.ajax({
-			url: '/SuperSaller/auth/logout/',
-			type: 'POST',
-			async: true,
-			headers: csrfHeader,
-			dataType: 'json',
-			contentType: 'application/x-www-form-urlencoded;charset:utf-8;',
-			data:{
-				logout:true
-			},
-		});
+		url: '/SuperSaller/auth/logout/',
+		type: 'POST',
+		async: true,
+		headers: csrfHeader,
+		dataType: 'json',
+		contentType: 'application/x-www-form-urlencoded;charset:utf-8;',
+		data: {
+			logout: true
+		},
+		success: function() {
+			console.log("*******************************s");
+			location.reload();
+		},
+		error: function() {
+			console.log("*******************************e");
+			location.reload();
+		}
+	});
 }
 
+function prefixInteger(num, length) {
+	return(Array(length).join('0') + num).slice(-length);
+}
 
+function miniteToTime(min){
+	return prefixInteger(min/60,2)+":"+prefixInteger(min%60,2);
+}

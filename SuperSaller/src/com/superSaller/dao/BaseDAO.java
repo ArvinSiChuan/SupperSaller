@@ -16,4 +16,15 @@ public abstract class BaseDAO<T> extends JdbcDaoSupport implements RowMapper<T> 
 		setDataSource(dataSource);
 	}
 
+	protected static String contactSqlFieds(String... fileds) {
+		String contacted = " ";
+		for (int i = 0; i < fileds.length; i++) {
+			if (i == (fileds.length - 1)) {
+				contacted += fileds[i] + " ";
+			} else {
+				contacted += fileds[i] + ",";
+			}
+		}
+		return contacted;
+	}
 }

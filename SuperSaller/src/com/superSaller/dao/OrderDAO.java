@@ -18,13 +18,13 @@ import com.superSaller.beans.checkout.entities.Order;
 
 @Repository(value = "orderDAO")
 public class OrderDAO extends BaseDAO<Order> {
-	private final String orderIDCol = "ORDER_ID";
-	private final String orderSumCol = "ORDER_SUM";
-	private final String sumMoneyCol = "SUM_MONEY";
-	private final String orderCusIDCol = "ORDER_CUS_ID";
-	private final String orderStatusCol = "ORDER_STATUS";
-	private final String paymentIDCol = "PAYMENT_ID";
-	private final String emIDCol = "EM_ID";
+	private static final String orderIDCol = "ORDER_ID";
+	private static final String orderSumCol = "ORDER_SUM";
+	private static final String sumMoneyCol = "SUM_MONEY";
+	private static final String orderCusIDCol = "ORDER_CUS_ID";
+	private static final String orderStatusCol = "ORDER_STATUS";
+	private static final String paymentIDCol = "PAYMENT_ID";
+	private static final String emIDCol = "EM_ID";
 	private String userName;
 
 	@Resource(name = "cashSideEmDAO")
@@ -54,7 +54,8 @@ public class OrderDAO extends BaseDAO<Order> {
 	public String createOrder() {
 		String id = null;
 		UUID uuid = UUID.randomUUID();
-		String sql = "INSERT INTO ORDERS (SUM_MONEY,ORDER_SUM,ORDER_STATUS,EM_ID) values (?,?,?,?)";
+		String sql = "INSERT INTO ORDERS ( " + contactSqlFieds(sumMoneyCol, orderSumCol, orderStatusCol, emIDCol)
+				+ ") values (?,?,?,?)";
 		String getIDSql = "select order_id from orders where order_status=?";
 		getJdbcTemplate().update(sql, 0.0, 0.0, uuid.toString(), getUserName());
 		List<String> list = getJdbcTemplate().query(getIDSql, new RowMapper<String>() {
@@ -88,21 +89,15 @@ public class OrderDAO extends BaseDAO<Order> {
 		return order;
 	}
 
+	public List<Order> queryOrderByEm(String emID) {
+		String sql = "select " + contactSqlFieds(orderIDCol, orderSumCol, orderCusIDCol, orderStatusCol, sumMoneyCol,
+				paymentIDCol, emIDCol) + " from orders " + "where " + emIDCol + " =  ?";
+		return getJdbcTemplate().query(sql, this, emID);
+	}
+
 	public void recordOrderRuleMatch(Order order, List<DiscountRule> rules) {
 		// TODO Auto-generated method stub
 
-	}
-
-	private String contactSqlFieds(String... fileds) {
-		String contacted = " ";
-		for (int i = 0; i < fileds.length; i++) {
-			if (i == (fileds.length - 1)) {
-				contacted += fileds[i] + " ";
-			} else {
-				contacted += fileds[i] + ",";
-			}
-		}
-		return contacted;
 	}
 
 	private String getUserName() {

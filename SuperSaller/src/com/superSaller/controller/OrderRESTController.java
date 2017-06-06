@@ -31,13 +31,19 @@ public class OrderRESTController {
 		return orderDAO.fuzzyQueryOrders(id);
 	}
 
-	@RequestMapping(value = "/add/{orderid}/{quantity}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/good/add/{orderid}/{quantity}", method = RequestMethod.PUT)
 	public List<ViewSideGood> addGoodToOrder(@RequestBody ViewSideGood good, @PathVariable("orderid") String orderID,
 			@PathVariable("quantity") double quantity) {
 		good.setSaledDate(LocalDateTime.now());
+		good.setSaledPrice(good.getGoodPrice());
 		good.setOrderID(orderID);
 		good.setSum(quantity);
 		List<ViewSideGood> viewSideGoods = orderProcess.addGoodAndMatch(good);
 		return viewSideGoods;
+	}
+
+	@RequestMapping(value = "/good/delete", method = RequestMethod.DELETE)
+	public ViewSideGood removeFromOrder(@RequestBody ViewSideGood good) {
+		return orderProcess.removeGoodAndMatch(good);
 	}
 }

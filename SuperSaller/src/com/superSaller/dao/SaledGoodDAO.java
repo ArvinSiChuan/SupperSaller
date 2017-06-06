@@ -17,43 +17,49 @@ import com.superSaller.beans.outsideSupportSys.GoodIO;
 
 @Repository(value = "saledGoodDAO")
 public class SaledGoodDAO extends BaseDAO<SaledGood> {
-	private final String goodIDCol = "GOOD_ID";
-	private final String saledDateCol = "SALED_DATE";
-	private final String sumCol = "SUM";
-	private final String priceCol = "PRICE";
-	private final String orderIDCol = "ORDER_ID";
-	private final String fullCols = contactSqlFieds(goodIDCol, saledDateCol, sumCol, priceCol, orderIDCol);
+	private static final String goodIDCol = "GOOD_ID";
+	private static final String saledDateCol = "SALED_DATE";
+	private static final String sumCol = "SUM";
+	private static final String priceCol = "PRICE ";
+	private static final String orderIDCol = "ORDER_ID";
+	private static final String fullCols = contactSqlFieds(goodIDCol, saledDateCol, sumCol, priceCol, orderIDCol);
 	private final String oracleDateFomatter = "'yyyy-mm-dd hh24:mi:ss'";
 
 	@Resource(name = "goodsSupport")
 	private GoodIO goodDAO;
 
+	@Resource(name = "saledGoodsRulesDAO")
+	private SaledGoodsRulesDAO saledGoodsRulesDAO;
+
 	@Override
 	public SaledGood mapRow(ResultSet rs, int rowNum) throws SQLException {
 		SaledGood good = new SaledGood();
-		good.setGoodID(rs.getString(goodIDCol));
-		good.setSaledDate(rs.getTimestamp(saledDateCol).toLocalDateTime());
-		good.setSum(rs.getDouble(sumCol));
-		good.setPrice(rs.getDouble(priceCol));
-		good.setOrderID(rs.getString(orderIDCol));
+		good.setGoodID(rs.getString(goodIDCol.trim()));
+		good.setSaledDate(rs.getTimestamp(saledDateCol.trim()).toLocalDateTime());
+		good.setSum(rs.getDouble(sumCol.trim()));
+		good.setPrice(rs.getDouble(priceCol.trim()));
+		good.setOrderID(rs.getString(orderIDCol.trim()));
 		return good;
 	}
 
 	@Transactional
 	public void addSaledGood(SaledGood good) {
-		String querySql = "select count(*) as counter from saled_goods where good_id=? and order_id=?";
+		String querySql = "select count(*) as counter from saled_goods where " + goodIDCol + "=? and " + orderIDCol
+				+ "=?";
 		int records = getJdbcTemplate().query(querySql, new CounterRowMapper(), good.getGoodID(), good.getOrderID())
 				.get(0);
 		if (records > 0) {
-			double sumValue = getJdbcTemplate().query(
-					"select " + sumCol + "  from saled_goods where good_id=? and order_id=?", new RowMapper<Double>() {
+			double sumValue = getJdbcTemplate()
+					.query("select " + sumCol + "  from saled_goods where " + goodIDCol + "=? and " + orderIDCol + "=?",
+							new RowMapper<Double>() {
 
-						@Override
-						public Double mapRow(ResultSet rs, int rowNum) throws SQLException {
-							return rs.getDouble(sumCol);
-						}
+								@Override
+								public Double mapRow(ResultSet rs, int rowNum) throws SQLException {
+									return rs.getDouble(sumCol);
+								}
 
-					}, good.getGoodID(), good.getOrderID()).get(0);
+							}, good.getGoodID(), good.getOrderID())
+					.get(0);
 			good.setSum(sumValue + good.getSum());
 			updateSaledGood(good);
 		} else {
@@ -64,12 +70,14 @@ public class SaledGoodDAO extends BaseDAO<SaledGood> {
 		}
 	}
 
-	public void removeSaledGood(SaledGood good) {
-		String sql = "delete from saled_goods where good_id=? and saled_date=? ";
-		getJdbcTemplate().update(sql, good.getGoodID(), good.getSaledDate());
-
+	@Transactional
+	public SaledGood removeSaledGood(SaledGood good) {
+		String sql = "delete from saled_goods where " + goodIDCol + "=? and " + orderIDCol + "=? ";
+		int r = getJdbcTemplate().update(sql, good.getGoodID(), good.getOrderID());
+		return good;
 	}
 
+	@Transactional
 	public void updateSaledGood(SaledGood good) {
 		String sql = "update saled_goods set " + goodIDCol + "=?," + saledDateCol + "=to_date(?," + oracleDateFomatter
 				+ ")," + priceCol + "=?," + sumCol + "=?," + orderIDCol + "=? where " + goodIDCol + "=? and "
@@ -80,7 +88,11 @@ public class SaledGoodDAO extends BaseDAO<SaledGood> {
 
 	public List<SaledGood> queryGoodsByOrderID(String orderID) {
 		String sql = "select " + fullCols + " from saled_goods where order_id=?";
-		return getJdbcTemplate().query(sql, this, orderID);
+		List<SaledGood> saledGoods = getJdbcTemplate().query(sql, this, orderID);
+		for (SaledGood saledGood : saledGoods) {
+			saledGood.setRuleID(saledGoodsRulesDAO.getRulesByGood(saledGood));
+		}
+		return saledGoods;
 	}
 
 	public List<ViewSideGood> getGoodsInsameOrder(ViewSideGood good) {
@@ -92,18 +104,6 @@ public class SaledGoodDAO extends BaseDAO<SaledGood> {
 			viewSideGoods.add(viewSideGood);
 		}
 		return viewSideGoods;
-	}
-
-	private String contactSqlFieds(String... fileds) {
-		String contacted = " ";
-		for (int i = 0; i < fileds.length; i++) {
-			if (i == (fileds.length - 1)) {
-				contacted += fileds[i] + " ";
-			} else {
-				contacted += fileds[i] + ",";
-			}
-		}
-		return contacted;
 	}
 
 }

@@ -15,6 +15,6 @@ public class AdminController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String toAdminMainPage() {
-		return "/admin/index";
+		return "/admin/rules";
 	}
 }

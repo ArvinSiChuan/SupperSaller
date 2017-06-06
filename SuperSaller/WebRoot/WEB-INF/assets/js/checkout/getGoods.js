@@ -28,6 +28,8 @@ function foucusNewGoodBox() {
 
 function resetNewGoodRow() {
 	newGoodBox.val('');
+	newGoodBox.siblings("[name='history']").val('');
+	addGoodToListBtn.attr("disabled",true);
 	foucusNewGoodBox();
 	newGoodRowPass = false;
 	addNewGood.children("td[name='comments']").empty();
@@ -39,7 +41,7 @@ function resetNewGoodRow() {
 	addNewGood.children("td[name='discountMoney']").empty();
 	addNewGood.children("td[name='subTotal']").empty();
 	addNewGood.children("td[name='comments']").empty();
-
+	
 }
 
 // add one op for goodNum
@@ -76,12 +78,10 @@ function qeuryGoodID(data) {
 		data: {
 			goodID: data
 		},
-
 		success: function(data) {
 			refreshPossibleList(data);
 		},
 		error: function(data) {
-			alert("Network Error");
 			ajaxError(data);
 		}
 	});
@@ -147,16 +147,19 @@ function refreshSubTotal() {
 	var goodNum = goodNumBox.val();
 	if(isNaN(price)) {
 		addNewGood.children("td[name='subTotal']")
-			.html("<span style='color:red;font-weight:bolder;'>价格有误</span>");
+			.html("<span style='color:red;'>价格有误</span>");
 		newGoodRowPass = false;
-	} else if(isNaN(goodNum) || goodNum == '') {
+	} else if(isNaN(goodNum) || goodNum == ''||goodNum<1) {
 		addNewGood.children("td[name='subTotal']")
-			.html("<span style='color:red;font-weight:bolder;'>数量有误</span>");
+			.html("<span style='color:red;'>数量有误</span>");
 		goodNumBox.css("color", "red");
 		newGoodRowPass = false;
-	} else {
+	}else {
+		newGoodRowPass=true;
+		goodNumBox.css("color","black");
 		addNewGood.children("td[name='subTotal']")
 			.html("￥" + getSum(price, goodNum).toFixed(2));
 	}
+	addGoodToListBtn.attr("disabled",!newGoodRowPass);
 
 }

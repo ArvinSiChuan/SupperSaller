@@ -29,7 +29,7 @@
 	</mvc:annotation-driven>
 	 
 	<!-- <mvc:resources mapping="/html/*" location="/WEB-INF/studentPages/"></mvc:resources> -->
-	<mvc:resources location="/WEB-INF/assets/js/" mapping="/js/*"></mvc:resources>
+	<mvc:resources location="/WEB-INF/assets/js/" mapping="/js/**"></mvc:resources>
 	<mvc:resources location="/WEB-INF/assets/css/" mapping="/css/*"></mvc:resources>
 	
 </beans>
