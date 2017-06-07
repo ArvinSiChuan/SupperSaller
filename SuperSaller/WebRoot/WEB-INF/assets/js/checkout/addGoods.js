@@ -52,10 +52,10 @@ function updateRow(currentRow, good,groupID) {
 	currentRow.children("td[name='goodName']").html(good.goodName + "<br/>-----<br />" + good.goodSpecifications);
 	currentRow.children("td[name='goodBrand']").html(good.goodBrand + "<br />-----<br />" + good.goodType);
 	goodNumsTD.children("input[name='goodNums']").val(good.saledGood.sum);
-	currentRow.children("td[name='originalPrice']").html("￥" + good.goodPrice);
-	currentRow.children("td[name='discountedPrice']").html("￥" + good.saledGood.price);
-	currentRow.children("td[name='subTotal']").html("￥" + (good.saledGood.price * good.saledGood.sum));
-	currentRow.children("td[name='discountMoney']").html("￥" + ((good.goodPrice - good.saledGood.price) * good.saledGood.sum));
+	currentRow.children("td[name='originalPrice']").html("￥" + good.goodPrice.toFixed(2));
+	currentRow.children("td[name='discountedPrice']").html("￥" + good.saledGood.price.toFixed(2));
+	currentRow.children("td[name='subTotal']").html("￥" + (good.saledGood.price * good.saledGood.sum).toFixed(2));
+	currentRow.children("td[name='discountMoney']").html("￥" + ((good.goodPrice - good.saledGood.price) * good.saledGood.sum).toFixed());
 	currentRow.children("td[name='comments']").html(groupID);
 	goodNumsTD.children("input[name='goodNumAdd']").click(function() {
 

@@ -1,4 +1,4 @@
-package com.superSaller.controller;
+package com.superSaller.controller.REST;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,7 +43,7 @@ public class OrderRESTController {
 	}
 
 	@RequestMapping(value = "/good/delete", method = RequestMethod.DELETE)
-	public ViewSideGood removeFromOrder(@RequestBody ViewSideGood good) {
+	public List<ViewSideGood> removeFromOrder(@RequestBody ViewSideGood good) {
 		return orderProcess.removeGoodAndMatch(good);
 	}
 }

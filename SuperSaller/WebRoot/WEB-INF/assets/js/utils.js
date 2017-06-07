@@ -64,5 +64,5 @@ function prefixInteger(num, length) {
 }
 
 function miniteToTime(min){
-	return prefixInteger(min/60,2)+":"+prefixInteger(min%60,2);
+	return prefixInteger(Math.floor(min/60),2)+":"+prefixInteger(min%60,2);
 }

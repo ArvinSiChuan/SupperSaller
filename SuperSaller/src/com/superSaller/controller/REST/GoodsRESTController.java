@@ -1,4 +1,4 @@
-package com.superSaller.controller;
+package com.superSaller.controller.REST;
 
 import java.util.ArrayList;
 import java.util.List;

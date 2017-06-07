@@ -15,7 +15,7 @@ public interface OrderProcess {
 
 	public List<ViewSideGood> addGoodAndMatch(ViewSideGood good);
 
-	public ViewSideGood removeGoodAndMatch(ViewSideGood good);
+	public List<ViewSideGood> removeGoodAndMatch(ViewSideGood good);
 
 	public List<ViewSideGood> getAddedGoodsByOrder(String orderID);
 

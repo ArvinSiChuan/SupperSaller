@@ -1,5 +1,6 @@
 package com.superSaller.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,6 +86,35 @@ public class SaledGoodDAO extends BaseDAO<SaledGood> {
 				+ orderIDCol + "=?";
 		getJdbcTemplate().update(sql, good.getGoodID(), good.getFormatedSaledDate(), good.getPrice(), good.getSum(),
 				good.getOrderID(), good.getGoodID(), good.getOrderID());
+	}
+
+	@Transactional
+	public List<ViewSideGood> batchUpdateGoods(List<ViewSideGood> goods) {
+		List<SaledGood> saledGoods = new ArrayList<SaledGood>();
+		for (ViewSideGood viewSideGood : goods) {
+			saledGoods.add(viewSideGood.getSaledGood());
+		}
+		String sql = "update saled_goods set " + goodIDCol + "=?," + saledDateCol + "=to_date(?," + oracleDateFomatter
+				+ ")," + priceCol + "=?," + sumCol + "=?," + orderIDCol + "=? where " + goodIDCol + "=? and "
+				+ orderIDCol + "=?";
+		getJdbcTemplate().batchUpdate(sql, saledGoods, saledGoods.size(),
+				new ParameterizedPreparedStatementSetter<SaledGood>() {
+
+					@Override
+					public void setValues(PreparedStatement ps, SaledGood saledGood) throws SQLException {
+						ps.setString(1, saledGood.getGoodID());
+						ps.setString(2, saledGood.getFormatedSaledDate());
+						ps.setDouble(3, saledGood.getPrice());
+						ps.setDouble(4, saledGood.getSum());
+						ps.setString(5, saledGood.getOrderID());
+
+						ps.setString(6, saledGood.getGoodID());
+						ps.setString(7, saledGood.getOrderID());
+
+					}
+
+				});
+		return getGoodsInsameOrder(goods.get(0));
 	}
 
 	public List<SaledGood> queryGoodsByOrderID(String orderID) {

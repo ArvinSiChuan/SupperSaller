@@ -1,8 +1,10 @@
 package com.superSaller.beans.checkout.Impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
@@ -10,8 +12,7 @@ import com.superSaller.beans.checkout.DiscountMatcher;
 import com.superSaller.beans.checkout.entities.DiscountRule;
 import com.superSaller.beans.checkout.entities.Present;
 import com.superSaller.beans.checkout.entities.ViewSideGood;
-import com.superSaller.beans.outsideSupportSys.entities.Customer;
-import com.superSaller.beans.outsideSupportSys.entities.Good;
+import com.superSaller.dao.RuleDAO;
 
 /**
  * @author 邱依强
@@ -20,33 +21,32 @@ import com.superSaller.beans.outsideSupportSys.entities.Good;
  */
 @Service(value = "ruleMatcher")
 public class DiscountRuleMatcherImpl implements DiscountMatcher {
+	private List<ViewSideGood> goods;
+	private List<DiscountRule> rules;
+	private List<Present> presents;
 
-	private Customer customer;
-	private Map<Good, Integer> goods;
-	private Good goodSupport;
-	private ArrayList<Map<DiscountRule, Good>> matchingRules;
-	private DiscountRule relatedDiscountRule;
+	@Resource(name = "ruleDAO")
+	private RuleDAO ruleDAO;
 
 	public DiscountRuleMatcherImpl() {
-
 	}
 
 	@Override
-	public ArrayList<ViewSideGood> doDiscountRuleMatch(ArrayList<ViewSideGood> goods) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ViewSideGood> doDiscountRuleMatch(List<ViewSideGood> goods) {
+		this.goods = goods;
+		// doRuleValidity();
+		rules = ruleDAO.queryAllRules(); // for test
+		doRuleMatch();
+		goods = this.goods;
+		return goods;
 	}
 
-	private ArrayList<Map<DiscountRule, Good>> doMutexCheck() {
-		return null;
+	private void doMutexCheck() {
+
 	}
 
-	private int doPresentCheck() {
-		return 0;
-	}
-
-	private Set<Present> doPresentDecision() {
-		return null;
+	public List<Present> getPresents() {
+		return presents;
 	}
 
 	/**
@@ -54,20 +54,114 @@ public class DiscountRuleMatcherImpl implements DiscountMatcher {
 	 * @param customer
 	 * @param rules
 	 */
-	private ArrayList<Map<DiscountRule, Good>> doRuleMatch(Customer customer, ArrayList<DiscountRule> rules) {
-		return null;
+	private void doRuleMatch() {
+		List<DiscountRule> partlyRules = new ArrayList<DiscountRule>();
+		List<DiscountRule> globalRule = new ArrayList<DiscountRule>();
+		for (DiscountRule rule : rules) {
+			if (rule.getBundleGoods().size() == 0) {
+				globalRule.add(rule);
+			} else {
+				partlyRules.add(rule);
+			}
+		}
+		for (DiscountRule rule : partlyRules) {
+			switch (rule.getType()) {
+			case "FULLFREE":
+				FULLFREEMatcher.match(rule, goods);
+				break;
+			case "FULLCOUNT":
+
+				break;
+			case "FULLPRESENT":
+
+				break;
+			case "FULLVOUCHER":
+
+				break;
+			case "BUYPRESENT":
+
+				break;
+			case "BUYPRESET":
+
+				break;
+			case "BUYSPECIAL":
+
+				break;
+			case "BUYFREE":
+
+				break;
+			case "BUYCOUNT":
+
+				break;
+			case "BUYVOUCHER":
+
+				break;
+
+			}
+		}
+		for (DiscountRule rule : globalRule) {
+			switch (rule.getType()) {
+			case "FULLFREE":
+				FULLFREEMatcher.match(rule, goods);
+				break;
+			case "FULLCOUNT":
+
+				break;
+			case "FULLPRESENT":
+
+				break;
+			case "FULLVOUCHER":
+
+				break;
+			case "BUYPRESENT":
+
+				break;
+			case "BUYPRESET":
+
+				break;
+			case "BUYSPECIAL":
+
+				break;
+			case "BUYFREE":
+
+				break;
+			case "BUYCOUNT":
+
+				break;
+			case "BUYVOUCHER":
+
+				break;
+
+			}
+		}
 	}
 
-	private ArrayList<Map<DiscountRule, Good>> doValidity() {
-		return null;
-	}
-
-	/**
-	 * 
-	 * @param customer
-	 */
-	private ArrayList<DiscountRule> filteCustomer(Customer customer) {
-		return null;
+	// valid rules
+	private void doRuleValidity() {
+		List<DiscountRule> rules = ruleDAO.queryAllRules();
+		List<DiscountRule> filteDiscountRules = new ArrayList<DiscountRule>();
+		for (DiscountRule discountRule : rules) {
+			boolean flag = true;
+			LocalDateTime now = LocalDateTime.now();
+			int miniteOfDayOfNow = now.getHour() * 60 + now.getMinute();
+			if (discountRule.getDatePeriodStart().isAfter(LocalDateTime.now())) {
+				// DATE NOT BEGIN
+				flag = false;
+			} else if (discountRule.getDatePeriodEnd().isBefore(LocalDateTime.now())) {
+				// DATE ALREADY PASSED
+				flag = false;
+			} else if (discountRule.getDayPeriodStart() > miniteOfDayOfNow) {
+				// TIME NOT BEGIN
+				flag = false;
+			} else if (discountRule.getDayPeriodEnd() < miniteOfDayOfNow) {
+				// TIME ALREADY PASSED
+				flag = false;
+			}
+			if (flag) {
+				filteDiscountRules.add(discountRule);
+			}
+		}
+		this.rules = filteDiscountRules;
 	}
 
 }

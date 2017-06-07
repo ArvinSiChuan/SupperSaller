@@ -26,6 +26,7 @@ CREATE TABLE Discount_Rules
 (
 	Rule_UUID CHAR(32) NOT NULL,
 	Rule_Type VARCHAR2(50) NOT NULL,
+	priority number(1) DEFAULT(0) NOT NULL ,
 	Em_ID VARCHAR2(64) NOT NULL,
 	Rule_Name VARCHAR2(50) NOT NULL,
 	Discount_Rate NUMBER(8,2),

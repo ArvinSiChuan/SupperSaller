@@ -23,7 +23,7 @@
 				<h2 style="font-size: xx-large;">登录</h2>
 				<h3>商场促销系统</h3>
 				<c:if test="${SPRING_SECURITY_LAST_EXCEPTION.message != null}">
-					<h4 style="color:red;">${SPRING_SECURITY_LAST_EXCEPTION.message}</h4>
+					<h4 style="color:red;"><ruby>登录信息有误<rt>${SPRING_SECURITY_LAST_EXCEPTION.message}</rt></ruby></h4>
 				</c:if>
 			</header>
 

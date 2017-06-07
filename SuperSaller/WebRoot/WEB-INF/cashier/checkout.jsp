@@ -30,7 +30,7 @@
 
 		</header>
 
-		<div id="goodListDiv" style="margin:auto;width: 90%;">
+		<div id="goodListDiv"  style="margin:auto;width: 90%;">
 			<table id="goodListTable" class="fit">
 				<thead>
 					<tr>

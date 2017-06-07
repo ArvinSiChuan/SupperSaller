@@ -2,9 +2,8 @@ package com.superSaller.beans.checkout.entities;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-
-import com.superSaller.beans.outsideSupportSys.entities.Good;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 邱依强
@@ -20,7 +19,8 @@ public class DiscountRule {
 	private double freeMoney;
 	private double specialPrice;
 	private double conditionValue;
-	private ArrayList<Good> bundleGoods;
+	private Map<String, String> bundleGoods;
+	private List<Present> presents;
 	private LocalDateTime datePeriodEnd;
 	private LocalDateTime datePeriodStart;
 	private int dayPeriodEnd = 1440;
@@ -55,7 +55,7 @@ public class DiscountRule {
 	 * @param weekPeriodStart
 	 */
 	public DiscountRule(String UUID, String type, String name, String emID, double discountRate, double freeMoney,
-			double specialPrice, double conditionValue, ArrayList<Good> bundleGoods, LocalDateTime datePeriodEnd,
+			double specialPrice, double conditionValue, Map<String, String> bundleGoods, LocalDateTime datePeriodEnd,
 			LocalDateTime datePeriodStart, int dayPeriodEnd, int dayPeriodStart, int priority, int weekPeriodEnd,
 			int weekPeriodStart) {
 		super();
@@ -212,7 +212,7 @@ public class DiscountRule {
 	/**
 	 * @return the bundleGoods
 	 */
-	public ArrayList<Good> getBundleGoods() {
+	public Map<String, String> getBundleGoods() {
 		return bundleGoods;
 	}
 
@@ -220,7 +220,7 @@ public class DiscountRule {
 	 * @param bundleGoods
 	 *            the bundleGoods to set
 	 */
-	public void setBundleGoods(ArrayList<Good> bundleGoods) {
+	public void setBundleGoods(Map<String, String> bundleGoods) {
 		this.bundleGoods = bundleGoods;
 	}
 

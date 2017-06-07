@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.superSaller.beans.checkout.DiscountMatcher;
 import com.superSaller.beans.checkout.OrderProcess;
 import com.superSaller.beans.checkout.entities.ViewSideGood;
 import com.superSaller.beans.payment.PaymentProcess;
@@ -25,6 +26,9 @@ public class OrderProcessImpl implements OrderProcess {
 	@Resource(name = "saledGoodDAO")
 	private SaledGoodDAO saledGoodDAO;
 
+	@Resource(name = "ruleMatcher")
+	private DiscountMatcher matcher;
+
 	private PaymentProcess paymentProcess;
 
 	@Override
@@ -35,13 +39,17 @@ public class OrderProcessImpl implements OrderProcess {
 	@Override
 	public List<ViewSideGood> addGoodAndMatch(ViewSideGood good) {
 		List<ViewSideGood> viewSideGoods = addGood(good);
-		return viewSideGoods;
+		matcher.doDiscountRuleMatch(viewSideGoods);
+		// return viewSideGoods;
+		return batchUpdateGood(viewSideGoods);
 	}
 
 	@Override
-	public ViewSideGood removeGoodAndMatch(ViewSideGood good) {
-		saledGoodDAO.removeSaledGood(good.getSaledGood());
-		return good;
+	public List<ViewSideGood> removeGoodAndMatch(ViewSideGood good) {
+		List<ViewSideGood> viewSideGoods = removeGood(good);
+		matcher.doDiscountRuleMatch(viewSideGoods);
+		// return viewSideGoods;
+		return batchUpdateGood(viewSideGoods);
 	}
 
 	private List<ViewSideGood> addGood(ViewSideGood good) {
@@ -50,6 +58,16 @@ public class OrderProcessImpl implements OrderProcess {
 		}
 		saledGoodDAO.addSaledGood(good.getSaledGood());
 		return saledGoodDAO.getGoodsInsameOrder(good);
+	}
+
+	private List<ViewSideGood> removeGood(ViewSideGood good) {
+		saledGoodDAO.removeSaledGood(good.getSaledGood());
+		return saledGoodDAO.getGoodsInsameOrder(good);
+	}
+
+	private List<ViewSideGood> batchUpdateGood(List<ViewSideGood> goods) {
+		// not set rule that matched
+		return saledGoodDAO.batchUpdateGoods(goods);
 	}
 
 	@Override

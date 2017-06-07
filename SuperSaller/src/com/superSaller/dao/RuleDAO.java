@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
 import com.superSaller.beans.checkout.entities.DiscountRule;
@@ -12,6 +14,7 @@ import com.superSaller.beans.checkout.entities.DiscountRule;
 public class RuleDAO extends BaseDAO<DiscountRule> {
 	public static final String ruleUUIDCol = "RULE_UUID";
 	public static final String ruleTypeCol = "RULE_TYPE";
+	public static final String rulePriorityCol = "PRIORITY";
 	public static final String emIDCol = "EM_ID";
 	public static final String ruleNameCol = "RULE_NAME";
 	public static final String discountRateCol = "DISCOUNT_RATE";
@@ -22,12 +25,15 @@ public class RuleDAO extends BaseDAO<DiscountRule> {
 	public static final String datePeriodEndCol = "DATE_PERIOD_END";
 	public static final String dayPeriodStartCol = "DAY_PERIOD_START";
 	public static final String dayPeriodEndCol = "DAY_PERIOD_END";
-	private final String allFields = contactSqlFieds(ruleUUIDCol, ruleTypeCol, ruleNameCol, emIDCol, discountRateCol,
-			freeMoneyCol, specialPriceCol, conditionValueCol, datePeriodStartCol, datePeriodEndCol, dayPeriodStartCol,
-			dayPeriodEndCol);
+	private final String allFields = contactSqlFieds(ruleUUIDCol, ruleTypeCol, rulePriorityCol, ruleNameCol, emIDCol,
+			discountRateCol, freeMoneyCol, specialPriceCol, conditionValueCol, datePeriodStartCol, datePeriodEndCol,
+			dayPeriodStartCol, dayPeriodEndCol);
 	private final String insertIntoTable = "insert into discount_rules ";
 
 	private final String formTable = " from discount_rules ";
+
+	@Resource(name = "discountGoodsDAO")
+	private DiscountGoodsDAO bundleGoodsDAO;
 
 	@Override
 	public DiscountRule mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -35,6 +41,7 @@ public class RuleDAO extends BaseDAO<DiscountRule> {
 		rule.setUUID(rs.getString(ruleUUIDCol));
 		rule.setName(rs.getString(ruleNameCol));
 		rule.setType(rs.getString(ruleTypeCol));
+		rule.setPriority(rs.getInt(rulePriorityCol));
 		rule.setEmID(rs.getString(emIDCol));
 		rule.setDiscountRate(rs.getDouble(discountRateCol));
 		rule.setFreeMoney(rs.getDouble(freeMoneyCol));
@@ -58,18 +65,27 @@ public class RuleDAO extends BaseDAO<DiscountRule> {
 	}
 
 	public List<DiscountRule> queryRulesByEm(String emID) {
-		String querySql = "select " + allFields + formTable + " where " + emIDCol + "=?";
+		String querySql = "select " + allFields + formTable + " where " + emIDCol + "=? ORDER BY PRIORITY ASC";
 		return getJdbcTemplate().query(querySql, this, emID);
+	}
+
+	public List<DiscountRule> queryAllRules() {
+		String querySql = "select " + allFields + formTable + " ORDER BY PRIORITY ASC";
+		List<DiscountRule> rules = getJdbcTemplate().query(querySql, this);
+		for (DiscountRule discountRule : rules) {
+			discountRule.setBundleGoods(bundleGoodsDAO.getGoods(discountRule.getUUID()));
+		}
+		return rules;
 	}
 
 	public DiscountRule addRule(DiscountRule rule) {
 		DiscountRule discountRule = null;
 		String sql = insertIntoTable + "(" + allFields
-				+ ") values (?,?,?,?,?,?,?,?,to_date(?,'yyyy-mm-dd hh24:mi:ss'),to_date(?,'yyyy-mm-dd hh24:mi:ss'),?,?) ";
-		int r = getJdbcTemplate().update(sql, rule.getUUID(), rule.getType(), rule.getName(), rule.getEmID(),
-				rule.getDiscountRate(), rule.getFreeMoney(), rule.getSpecialPrice(), rule.getConditionValue(),
-				rule.getFormattedDateStart(), rule.getFormattedDateEnd(), rule.getDayPeriodStart(),
-				rule.getDayPeriodEnd());
+				+ ") values (?,?,?,?,?,?,?,?,?,to_date(?,'yyyy-mm-dd hh24:mi:ss'),to_date(?,'yyyy-mm-dd hh24:mi:ss'),?,?) ";
+		int r = getJdbcTemplate().update(sql, rule.getUUID(), rule.getType(), rule.getPriority(), rule.getName(),
+				rule.getEmID(), rule.getDiscountRate(), rule.getFreeMoney(), rule.getSpecialPrice(),
+				rule.getConditionValue(), rule.getFormattedDateStart(), rule.getFormattedDateEnd(),
+				rule.getDayPeriodStart(), rule.getDayPeriodEnd());
 		if (r > 0) {
 			discountRule = rule;
 		}

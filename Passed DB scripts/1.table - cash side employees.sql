@@ -24,7 +24,8 @@ END;
 
 CREATE TABLE Cash_Side_Employees
 (
-	Em_ID VARCHAR2(64) NOT NULL
+	Em_ID VARCHAR2(64) NOT NULL,
+	em_role varchar2(16) NOT NULL
 )
 ;
 
@@ -33,18 +34,12 @@ CREATE TABLE Cash_Side_Employees
 create or replace trigger trigger_em_delete
 	before delete on cash_side_employees
 	for each row
-declare
-	marker int;
-	delete_mark_emid cash_side_employees.Em_ID%type;
 
-begin
-	select count(*) into marker from new where emid = '________';
-	if marker < 0 then
-		insert into new values ('________');
-	end if;
-	update orders set EM_ID= '________' where emid=old.emid;
-	update payments set EM_ID= '________' where emid=old.emid;
-	update discount_rules set EM_ID= '________' where emid=old.emid;
+begin 
+	update orders set EM_ID= '________' where em_id=:old.em_id;
+	update payments set EM_ID= '________' where em_id=:old.em_id;
+	update discount_rules set EM_ID= '________' where em_id=:old.em_id;
+	update cash_side_employees set em_id='________', em_role='quit' where em_id=:old.em_id;
 end trigger_em_delete;
 
 

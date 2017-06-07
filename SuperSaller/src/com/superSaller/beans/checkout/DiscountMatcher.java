@@ -1,6 +1,6 @@
 package com.superSaller.beans.checkout;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.superSaller.beans.checkout.entities.ViewSideGood;
 
@@ -15,5 +15,5 @@ public interface DiscountMatcher {
 	 * 
 	 * @param goods
 	 */
-	public ArrayList<ViewSideGood> doDiscountRuleMatch(ArrayList<ViewSideGood> goods);
+	public List<ViewSideGood> doDiscountRuleMatch(List<ViewSideGood> goods);
 }
