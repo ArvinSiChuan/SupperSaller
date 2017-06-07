@@ -9,23 +9,23 @@ import java.util.TreeMap;
 import com.superSaller.beans.checkout.entities.DiscountRule;
 import com.superSaller.beans.checkout.entities.ViewSideGood;
 
-public class FULLFREEMatcher extends BasicGoodsMatcher {
+public class BUYFREEMatcher extends BasicGoodsMatcher {
 
 	public List<ViewSideGood> match(DiscountRule rule, List<ViewSideGood> goods) {
-		if (matchedFilter(rule, goods)) {
-			return goods;
-		}
-		double totalMoney = 0, sum = 0, averageFreeMoney;
+		double totalMoney = 0, sum = 0, averageFreeMoney = 0, freeMoney = Double.MAX_VALUE;
 		Map<String, Double> goodsNums = new TreeMap<String, Double>();
 		for (ViewSideGood viewSideGood : goods) {
 			sum += viewSideGood.getSum();
 			totalMoney += viewSideGood.getSaledPrice() * viewSideGood.getSum();
 			goodsNums.put(viewSideGood.getGoodID(), viewSideGood.getSum());
+			freeMoney = viewSideGood.getSaledPrice() < freeMoney ? viewSideGood.getSaledPrice() : freeMoney;
 		}
+
 		if (rule.getBundleGoods().size() == 0) {
-			if (totalMoney >= rule.getConditionValue()) {
-				double discountMoney = (totalMoney - rule.getFreeMoney()) * (100 - rule.getDiscountRate()) / 100;
-				averageFreeMoney = (discountMoney + rule.getFreeMoney()) / sum;
+			if (sum >= rule.getConditionValue()) {
+				freeMoney = rule.getFreeMoney() > 0 ? rule.getFreeMoney() : freeMoney;
+				double discountMoney = (totalMoney - freeMoney) * (100 - rule.getDiscountRate()) / 100;
+				averageFreeMoney = (discountMoney + freeMoney) / sum;
 				for (ViewSideGood viewSideGood : goods) {
 					viewSideGood.setSaledPrice(viewSideGood.getSaledPrice() - averageFreeMoney);
 					List<String> list = viewSideGood.getRuleID();
@@ -33,8 +33,11 @@ public class FULLFREEMatcher extends BasicGoodsMatcher {
 				}
 			}
 		} else if (matchBundle(goodsNums, rule.getBundleGoods())) {
+
 			Set<String> ids = rule.getBundleGoods().keySet();
 			totalMoney = sum = averageFreeMoney = 0;
+			freeMoney = Double.MAX_VALUE;
+			int minMatchTimes = Integer.MAX_VALUE;
 			List<ViewSideGood> bundleGoods = new ArrayList<ViewSideGood>();
 			for (ViewSideGood viewSideGood : goods) {
 				if (ids.contains(viewSideGood.getGoodID())) {
@@ -44,9 +47,18 @@ public class FULLFREEMatcher extends BasicGoodsMatcher {
 			for (ViewSideGood viewSideGood : bundleGoods) {
 				sum += viewSideGood.getSum();
 				totalMoney += viewSideGood.getSaledPrice() * viewSideGood.getSum();
+				int min = (new Double(viewSideGood.getSum())).intValue();
+				minMatchTimes = min < minMatchTimes ? min : minMatchTimes;
+				freeMoney = viewSideGood.getSaledPrice() < freeMoney ? viewSideGood.getSaledPrice() : freeMoney;
 			}
-			double discountMoney = (totalMoney - rule.getFreeMoney()) * (100 - rule.getDiscountRate()) / 100;
-			averageFreeMoney = (discountMoney + rule.getFreeMoney()) / sum;
+			int min = (new Double(rule.getConditionValue())).intValue();
+			minMatchTimes = min < minMatchTimes ? min : minMatchTimes;
+
+			System.out.println(freeMoney + "  " + minMatchTimes);
+			freeMoney = freeMoney * minMatchTimes;
+
+			double discountMoney = (totalMoney - freeMoney) * (100 - rule.getDiscountRate()) / 100;
+			averageFreeMoney = (discountMoney + freeMoney) / sum;
 			for (ViewSideGood viewSideGood : bundleGoods) {
 				viewSideGood.setSaledPrice(viewSideGood.getSaledPrice() - averageFreeMoney);
 				List<String> list = viewSideGood.getRuleID();
@@ -55,17 +67,4 @@ public class FULLFREEMatcher extends BasicGoodsMatcher {
 		}
 		return goods;
 	}
-
-	private boolean matchedFilter(DiscountRule rule, List<ViewSideGood> goods) {
-		// TODO when saled goods rules and orders dao finished, add real filter.
-		boolean flag = false;
-		for (ViewSideGood viewSideGood : goods) {
-			if (rule.getUUID().equals(viewSideGood.getRuleID())) {
-				flag = true;
-				break;
-			}
-		}
-		return flag;
-	}
-
 }

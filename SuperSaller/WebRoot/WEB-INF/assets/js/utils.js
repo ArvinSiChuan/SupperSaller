@@ -36,6 +36,7 @@ function ajaxError(data) {
 	}
 }
 
+
 function doAjaxLogOut() {
 	var csrfHeader = getHeaderToken();
 	$.ajax({

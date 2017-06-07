@@ -9,12 +9,9 @@ import java.util.TreeMap;
 import com.superSaller.beans.checkout.entities.DiscountRule;
 import com.superSaller.beans.checkout.entities.ViewSideGood;
 
-public class FULLFREEMatcher extends BasicGoodsMatcher {
+public class FULLCOUNTMatcher extends BasicGoodsMatcher {
 
 	public List<ViewSideGood> match(DiscountRule rule, List<ViewSideGood> goods) {
-		if (matchedFilter(rule, goods)) {
-			return goods;
-		}
 		double totalMoney = 0, sum = 0, averageFreeMoney;
 		Map<String, Double> goodsNums = new TreeMap<String, Double>();
 		for (ViewSideGood viewSideGood : goods) {
@@ -24,8 +21,8 @@ public class FULLFREEMatcher extends BasicGoodsMatcher {
 		}
 		if (rule.getBundleGoods().size() == 0) {
 			if (totalMoney >= rule.getConditionValue()) {
-				double discountMoney = (totalMoney - rule.getFreeMoney()) * (100 - rule.getDiscountRate()) / 100;
-				averageFreeMoney = (discountMoney + rule.getFreeMoney()) / sum;
+				double discountMoney = totalMoney * (100 - rule.getDiscountRate()) / 100;
+				averageFreeMoney = discountMoney / sum;
 				for (ViewSideGood viewSideGood : goods) {
 					viewSideGood.setSaledPrice(viewSideGood.getSaledPrice() - averageFreeMoney);
 					List<String> list = viewSideGood.getRuleID();
@@ -45,8 +42,8 @@ public class FULLFREEMatcher extends BasicGoodsMatcher {
 				sum += viewSideGood.getSum();
 				totalMoney += viewSideGood.getSaledPrice() * viewSideGood.getSum();
 			}
-			double discountMoney = (totalMoney - rule.getFreeMoney()) * (100 - rule.getDiscountRate()) / 100;
-			averageFreeMoney = (discountMoney + rule.getFreeMoney()) / sum;
+			double discountMoney = totalMoney * (100 - rule.getDiscountRate()) / 100;
+			averageFreeMoney = discountMoney / sum;
 			for (ViewSideGood viewSideGood : bundleGoods) {
 				viewSideGood.setSaledPrice(viewSideGood.getSaledPrice() - averageFreeMoney);
 				List<String> list = viewSideGood.getRuleID();
@@ -55,17 +52,4 @@ public class FULLFREEMatcher extends BasicGoodsMatcher {
 		}
 		return goods;
 	}
-
-	private boolean matchedFilter(DiscountRule rule, List<ViewSideGood> goods) {
-		// TODO when saled goods rules and orders dao finished, add real filter.
-		boolean flag = false;
-		for (ViewSideGood viewSideGood : goods) {
-			if (rule.getUUID().equals(viewSideGood.getRuleID())) {
-				flag = true;
-				break;
-			}
-		}
-		return flag;
-	}
-
 }

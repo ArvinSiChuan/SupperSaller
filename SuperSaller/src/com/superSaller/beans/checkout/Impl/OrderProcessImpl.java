@@ -1,5 +1,6 @@
 package com.superSaller.beans.checkout.Impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -47,9 +48,14 @@ public class OrderProcessImpl implements OrderProcess {
 	@Override
 	public List<ViewSideGood> removeGoodAndMatch(ViewSideGood good) {
 		List<ViewSideGood> viewSideGoods = removeGood(good);
-		matcher.doDiscountRuleMatch(viewSideGoods);
-		// return viewSideGoods;
-		return batchUpdateGood(viewSideGoods);
+		if (viewSideGoods.size() > 0) {
+			matcher.doDiscountRuleMatch(viewSideGoods);
+			// return viewSideGoods;
+			return batchUpdateGood(viewSideGoods);
+		} else {
+			return new ArrayList<ViewSideGood>();
+		}
+
 	}
 
 	private List<ViewSideGood> addGood(ViewSideGood good) {

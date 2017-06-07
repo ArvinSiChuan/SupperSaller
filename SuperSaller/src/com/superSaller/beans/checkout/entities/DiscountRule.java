@@ -19,7 +19,7 @@ public class DiscountRule {
 	private double freeMoney;
 	private double specialPrice;
 	private double conditionValue;
-	private Map<String, String> bundleGoods;
+	private Map<String, Double> bundleGoods;
 	private List<Present> presents;
 	private LocalDateTime datePeriodEnd;
 	private LocalDateTime datePeriodStart;
@@ -55,7 +55,7 @@ public class DiscountRule {
 	 * @param weekPeriodStart
 	 */
 	public DiscountRule(String UUID, String type, String name, String emID, double discountRate, double freeMoney,
-			double specialPrice, double conditionValue, Map<String, String> bundleGoods, LocalDateTime datePeriodEnd,
+			double specialPrice, double conditionValue, Map<String, Double> bundleGoods, LocalDateTime datePeriodEnd,
 			LocalDateTime datePeriodStart, int dayPeriodEnd, int dayPeriodStart, int priority, int weekPeriodEnd,
 			int weekPeriodStart) {
 		super();
@@ -212,7 +212,7 @@ public class DiscountRule {
 	/**
 	 * @return the bundleGoods
 	 */
-	public Map<String, String> getBundleGoods() {
+	public Map<String, Double> getBundleGoods() {
 		return bundleGoods;
 	}
 
@@ -220,7 +220,7 @@ public class DiscountRule {
 	 * @param bundleGoods
 	 *            the bundleGoods to set
 	 */
-	public void setBundleGoods(Map<String, String> bundleGoods) {
+	public void setBundleGoods(Map<String, Double> bundleGoods) {
 		this.bundleGoods = bundleGoods;
 	}
 

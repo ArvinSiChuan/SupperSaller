@@ -10,7 +10,7 @@ import java.util.TreeMap;
 import org.springframework.stereotype.Repository;
 
 @Repository(value = "discountGoodsDAO")
-public class DiscountGoodsDAO extends BaseDAO<Map<String, String>> {
+public class DiscountGoodsDAO extends BaseDAO<Map<String, Double>> {
 	public static final String ruleUUIDCol = "RULE_UUID";
 	public static final String goodIDCol = "GOOD_ID";
 	public static final String numCol = "NUM";
@@ -19,17 +19,17 @@ public class DiscountGoodsDAO extends BaseDAO<Map<String, String>> {
 	public static final String insertIntoTable = "insert into " + table;
 
 	@Override
-	public Map<String, String> mapRow(ResultSet rs, int rowNum) throws SQLException {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put(rs.getString(goodIDCol), rs.getString(numCol));
+	public Map<String, Double> mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Map<String, Double> map = new HashMap<String, Double>();
+		map.put(rs.getString(goodIDCol), rs.getDouble(numCol));
 		return map;
 	}
 
-	public Map<String, String> getGoods(String ruleUUID) {
+	public Map<String, Double> getGoods(String ruleUUID) {
 		String querySql = "select " + contactSqlFieds(goodIDCol, numCol) + fromTable + " where " + ruleUUIDCol + "=?";
-		List<Map<String, String>> list = getJdbcTemplate().query(querySql, this, ruleUUID);
-		Map<String, String> goods = new TreeMap<String, String>();
-		for (Map<String, String> map : list) {
+		List<Map<String, Double>> list = getJdbcTemplate().query(querySql, this, ruleUUID);
+		Map<String, Double> goods = new TreeMap<String, Double>();
+		for (Map<String, Double> map : list) {
 			goods.putAll(map);
 		}
 		return goods;
