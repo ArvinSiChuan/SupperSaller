@@ -67,10 +67,10 @@ public class DiscountRuleMatcherImpl implements DiscountMatcher {
 		for (DiscountRule rule : partlyRules) {
 			switch (rule.getType()) {
 			case "FULLFREE":
-				// new FULLFREEMatcher().match(rule, goods);
+				new FULLFREEMatcher().match(rule, goods);
 				break;
 			case "FULLCOUNT":
-				// new FULLCOUNTMatcher().match(rule, goods);
+				new FULLCOUNTMatcher().match(rule, goods);
 				break;
 			case "FULLPRESENT":
 
@@ -102,10 +102,10 @@ public class DiscountRuleMatcherImpl implements DiscountMatcher {
 		for (DiscountRule rule : globalRule) {
 			switch (rule.getType()) {
 			case "FULLFREE":
-				// new FULLFREEMatcher().match(rule, goods);
+				new FULLFREEMatcher().match(rule, goods);
 				break;
 			case "FULLCOUNT":
-				// new FULLCOUNTMatcher().match(rule, goods);
+				new FULLCOUNTMatcher().match(rule, goods);
 				break;
 			case "FULLPRESENT":
 
