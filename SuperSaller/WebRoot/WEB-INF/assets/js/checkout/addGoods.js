@@ -55,11 +55,11 @@ function refreshChoosenGoodList(data) {
 		var groupID = good.saledGood.RuleID[0];
 		var rowContent = getRowTemplet(good.goodID, groupID);
 		var lastRowInGroup = addedList.children("tr[name='" + groupID + "']");
-		if(lastRowInGroup.length > 0) {
-			lastRowInGroup.after(rowContent);
-		} else {
+//		if(lastRowInGroup.length > 0) {
+//			lastRowInGroup.after(rowContent);
+//		} else {
 			addedList.append(rowContent);
-		}
+//		}
 		var currentRow = $("#" + good.goodID);
 		updateRow(currentRow, good, groupID);
 
@@ -69,6 +69,13 @@ function refreshChoosenGoodList(data) {
 		});
 	});
 	updateAmount();
+	if(addedList.children().length > 0) {
+		$("#beginPaymentBtn").attr("disabled", false);
+		$("#cancelOrderBtn").attr("disabled", false);
+	} else {
+		$("#beginPaymentBtn").attr("disabled", true);
+		$("#cancelOrderBtn").attr("disabled", true);
+	}
 
 }
 

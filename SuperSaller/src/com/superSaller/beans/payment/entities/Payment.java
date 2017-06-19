@@ -13,9 +13,9 @@ import com.superSaller.beans.payment.PaymentChannel;
 public class Payment {
 
 	private PaymentChannel paymentChannel;
-	private int paymentChennelSideID;
+	private String paymentChennelSideID;
 	private String paymentID;
-	private double paymentSum;
+	private double paymentMoney;
 	private Set<OrderProcess> relatedOrders;
 
 }

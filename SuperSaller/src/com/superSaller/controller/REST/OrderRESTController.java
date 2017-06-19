@@ -2,6 +2,7 @@ package com.superSaller.controller.REST;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -26,8 +27,8 @@ public class OrderRESTController {
 	@Resource(name = "orderProcess")
 	private OrderProcess orderProcess;
 
-	@RequestMapping(value = "/{uuid}", method = RequestMethod.POST)
-	public List<Order> fuzzyQueryOrders(@PathVariable("uuid") String id) {
+	@RequestMapping(value = "/{orderid}", method = RequestMethod.POST)
+	public List<Order> fuzzyQueryOrders(@PathVariable("orderid") String id) {
 		return orderDAO.fuzzyQueryOrders(id);
 	}
 
@@ -45,5 +46,9 @@ public class OrderRESTController {
 	@RequestMapping(value = "/good/delete", method = RequestMethod.DELETE)
 	public List<ViewSideGood> removeFromOrder(@RequestBody ViewSideGood good) {
 		return orderProcess.removeGoodAndMatch(good);
+	}
+
+	public Map<String, Boolean> finishOrder() {
+		return null;
 	}
 }

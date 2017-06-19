@@ -34,8 +34,8 @@ public class DiscountRuleMatcherImpl implements DiscountMatcher {
 	@Override
 	public List<ViewSideGood> doDiscountRuleMatch(List<ViewSideGood> goods) {
 		this.goods = goods;
-		// doRuleValidity();
-		rules = ruleDAO.queryAllRules(); // for test
+		doRuleValidity();
+		// rules = ruleDAO.queryAllRules(); // for test
 		doRuleMatch();
 		goods = this.goods;
 		return goods;
@@ -65,74 +65,46 @@ public class DiscountRuleMatcherImpl implements DiscountMatcher {
 			}
 		}
 		for (DiscountRule rule : partlyRules) {
-			switch (rule.getType()) {
-			case "FULLFREE":
-				new FULLFREEMatcher().match(rule, goods);
-				break;
-			case "FULLCOUNT":
-				new FULLCOUNTMatcher().match(rule, goods);
-				break;
-			case "FULLPRESENT":
-
-				break;
-			case "FULLVOUCHER":
-
-				break;
-			case "BUYPRESENT":
-
-				break;
-			case "BUYPRESET":
-
-				break;
-			case "BUYSPECIAL":
-
-				break;
-			case "BUYFREE":
-				new BUYFREEMatcher().match(rule, goods);
-				break;
-			case "BUYCOUNT":
-
-				break;
-			case "BUYVOUCHER":
-
-				break;
-
-			}
+			doDetailMatch(rule);
 		}
 		for (DiscountRule rule : globalRule) {
-			switch (rule.getType()) {
-			case "FULLFREE":
-				new FULLFREEMatcher().match(rule, goods);
-				break;
-			case "FULLCOUNT":
-				new FULLCOUNTMatcher().match(rule, goods);
-				break;
-			case "FULLPRESENT":
+			doDetailMatch(rule);
+		}
+	}
 
-				break;
-			case "FULLVOUCHER":
+	private void doDetailMatch(DiscountRule rule) {
+		switch (rule.getType()) {
+		case "FULLFREE":
+			new FULLFREEMatcher().match(rule, goods);
+			break;
+		case "FULLCOUNT":
+			new FULLCOUNTMatcher().match(rule, goods);
+			break;
+		case "FULLPRESENT":
 
-				break;
-			case "BUYPRESENT":
+			break;
+		case "FULLVOUCHER":
 
-				break;
-			case "BUYPRESET":
+			break;
+		case "BUYPRESENT":
 
-				break;
-			case "BUYSPECIAL":
+			break;
+		case "BUYPRESET":
 
-				break;
-			case "BUYFREE":
-				new BUYFREEMatcher().match(rule, goods);
-				break;
-			case "BUYCOUNT":
+			break;
+		case "BUYSPECIAL":
 
-				break;
-			case "BUYVOUCHER":
+			break;
+		case "BUYFREE":
+			new BUYFREEMatcher().match(rule, goods);
+			break;
+		case "BUYCOUNT":
 
-				break;
+			break;
+		case "BUYVOUCHER":
 
-			}
+			break;
+
 		}
 	}
 

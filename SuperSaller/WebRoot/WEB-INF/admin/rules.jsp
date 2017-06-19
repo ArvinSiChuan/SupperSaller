@@ -33,7 +33,7 @@
 						<td name="ruleNameType">促销规则名/类型</td>
 						<td name="ruleConditionValue">成立值</td>
 						<td name="discountRate">折扣率(0-100)</td>
-						<td name="freeMoney">满减金额</td>
+						<td name="freeMoney">满减金额(大于0有效)</td>
 						<td name="specialMoney">特价(大于0有效)</td>
 						<td name='effectiveDate'>生效日期</td>
 						<td name="dayPeriod">24小时<br />周期</td>

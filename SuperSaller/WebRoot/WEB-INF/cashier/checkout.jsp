@@ -59,7 +59,7 @@
 					<tr id="addNewGood" style="font-weight:bold;text-align: left;vertical-align: middle;">
 						<td name="newGood"><input name="newGood" type="text" pattern="[0-9]*" placeholder="商品数字号" /> <input name="history" type="hidden" />
 							<div name="possibleGoods" style="width: 100%;">
-								<a href="#newGood" class="button small fit" onclick="foucusNewGoodBox();">☝填写商品代码</a>
+								<a href="#addNewGood" class="button small fit" onclick="foucusNewGoodBox();">☝填写商品代码</a>
 							</div>
 						</td>
 						<td name="goodName"></td>

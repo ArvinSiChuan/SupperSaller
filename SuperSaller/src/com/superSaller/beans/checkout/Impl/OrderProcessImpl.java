@@ -40,6 +40,7 @@ public class OrderProcessImpl implements OrderProcess {
 	@Override
 	public List<ViewSideGood> addGoodAndMatch(ViewSideGood good) {
 		List<ViewSideGood> viewSideGoods = addGood(good);
+		resetSaledPrice(viewSideGoods);
 		matcher.doDiscountRuleMatch(viewSideGoods);
 		// return viewSideGoods;
 		return batchUpdateGood(viewSideGoods);
@@ -49,6 +50,7 @@ public class OrderProcessImpl implements OrderProcess {
 	public List<ViewSideGood> removeGoodAndMatch(ViewSideGood good) {
 		List<ViewSideGood> viewSideGoods = removeGood(good);
 		if (viewSideGoods.size() > 0) {
+			resetSaledPrice(viewSideGoods);
 			matcher.doDiscountRuleMatch(viewSideGoods);
 			// return viewSideGoods;
 			return batchUpdateGood(viewSideGoods);
@@ -69,6 +71,12 @@ public class OrderProcessImpl implements OrderProcess {
 	private List<ViewSideGood> removeGood(ViewSideGood good) {
 		saledGoodDAO.removeSaledGood(good.getSaledGood());
 		return saledGoodDAO.getGoodsInsameOrder(good);
+	}
+
+	private void resetSaledPrice(List<ViewSideGood> goods) {
+		for (ViewSideGood viewSideGood : goods) {
+			viewSideGood.setSaledPrice(viewSideGood.getGoodPrice());
+		}
 	}
 
 	private List<ViewSideGood> batchUpdateGood(List<ViewSideGood> goods) {

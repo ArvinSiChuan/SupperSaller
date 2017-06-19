@@ -31,10 +31,10 @@ $(document).ready(function() {
 	// read the csrf token
 	csrfHeader = getHeaderToken();
 
-	$("#logOut").click(function(){
+	$("#logOut").click(function() {
 		doAjaxLogOut();
 	});
-	
+
 	// focus on inputbox
 	foucusNewGoodBox();
 
@@ -70,10 +70,18 @@ $(document).ready(function() {
 	});
 
 	$("#cancelOrderBtn").click(function() {
-
+		deleteOrder();
 	})
 
 	$("#beginPaymentBtn").click(function() {
 
 	})
 });
+
+function deleteOrder() {
+	if(orderID!=null){
+		location.reload();
+		// need REST API
+
+	}
+}
