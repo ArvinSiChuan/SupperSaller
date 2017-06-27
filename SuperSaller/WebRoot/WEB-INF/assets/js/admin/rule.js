@@ -5,6 +5,9 @@ $(document).ready(function() {
 		ajaxUpdateRow();
 	});
 	ajaxUpdateRow();
+	$("#logOut").click(function() {
+		doAjaxLogOut();
+	});
 });
 
 function ajaxUpdateRow() {

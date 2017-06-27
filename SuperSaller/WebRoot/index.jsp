@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="./css/main.css" />
 		<script src="./js/jquery.min.js"></script>
 		<script src="./js/utils.js"></script>
+		<script src="./js/userpanel/userpanel.js"></script>
 	</head>
 
 	<body >
@@ -26,7 +27,7 @@
 		</header>
 			<div class="flex flex-2" style="margin: auto;text-align: center;width: 29.25%;" >
 				<security:authorize access="hasRole('CASHIER')">
-					<div>
+					<div style="margin: auto;">
 						<a href="./cashier/start" class="button" style="width: 200px;height: 200px;">
 							<br />
 							<ruby style="font-size: x-large;">收银侧<rt>Cashier Side</rt></ruby>
@@ -34,7 +35,7 @@
 					</div>
 				</security:authorize>
 				<security:authorize access="hasRole('ADMIN')">
-					<div>
+					<div style="margin: auto;">
 						<a href="./admin/" class="button" style="width: 200px;height: 200px;">
 							<br />
 							<ruby style="font-size: x-large;">管理侧<rt>Admin Side</rt></ruby>

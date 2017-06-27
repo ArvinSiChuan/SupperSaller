@@ -96,7 +96,6 @@ public class OrderDAO extends BaseDAO<Order> {
 	}
 
 	public void recordOrderRuleMatch(Order order, List<DiscountRule> rules) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -107,5 +106,11 @@ public class OrderDAO extends BaseDAO<Order> {
 			userDetails.isAccountNonExpired();
 		}
 		return userName;
+	}
+
+	public boolean updateOrderStatus(String orderID, String status) {
+		String sql = "update orders set " + orderStatusCol + " = ? where " + orderIDCol + "= ?";
+		int r = getJdbcTemplate().update(sql, status, orderID);
+		return r == 1;
 	}
 }

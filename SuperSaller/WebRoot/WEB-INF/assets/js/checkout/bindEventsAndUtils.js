@@ -74,14 +74,35 @@ $(document).ready(function() {
 	})
 
 	$("#beginPaymentBtn").click(function() {
-
+		doPayment();
 	})
 });
 
 function deleteOrder() {
-	if(orderID!=null){
+	if(orderID != null) {
 		location.reload();
 		// need REST API
 
 	}
+}
+
+function doPayment() {
+	var requestURL = "../order/" + orderID + "/finish";
+	$.ajax({
+		url: requestURL,
+		type: 'POST',
+		async: true,
+		headers: csrfHeader,
+		dataType: 'json',
+		contentType: 'application/x-www-form-urlencoded;charset:utf-8;',
+		data: {
+			operation: "finished"
+		},
+		success: function(data) {
+			location.reload();
+		},
+		error: function(data) {
+			ajaxError(data);
+		}
+	});
 }

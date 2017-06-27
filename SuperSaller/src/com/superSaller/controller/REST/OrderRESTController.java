@@ -1,6 +1,7 @@
 package com.superSaller.controller.REST;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,11 @@ public class OrderRESTController {
 		return orderProcess.removeGoodAndMatch(good);
 	}
 
-	public Map<String, Boolean> finishOrder() {
-		return null;
+	@RequestMapping(value = "/{orderID}/finish", method = RequestMethod.POST)
+	public Map<String, Boolean> finishOrder(String operation, @PathVariable("orderID") String orderID) {
+		Map<String, Boolean> status = new HashMap<String, Boolean>();
+		System.out.println(operation);
+		status.put("status", orderDAO.updateOrderStatus(orderID, operation));
+		return status;
 	}
 }
